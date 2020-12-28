@@ -40,20 +40,20 @@ entity prodotto_scalare is
            ack_end_op : in  STD_LOGIC;
            ack : out  STD_LOGIC;
            end_op : out  STD_LOGIC;
-           y : out  unsigned(n**2 - 1 downto 0)); -- sufficiente se M <= n
+           y : out  unsigned(3*n - 1 downto 0));
 end prodotto_scalare;
 
 architecture Structural of prodotto_scalare is
 
-signal current_sum : unsigned(n**2 - 1 downto 0) := (others => '0');
+signal current_sum : unsigned(3*n - 1 downto 0) := (others => '0');
 signal buff_a : unsigned(n-1 downto 0) := (others => '0');
 signal buff_b : unsigned(n-1 downto 0) := (others => '0');
 signal internal_rst : std_logic := '0';
 signal rst_state : std_logic := '0';
 signal step : std_logic := '0';
-signal molt_out : unsigned(n**2 - 1 downto 0) := (others => '0');
-signal op_R : unsigned(n**2 - 1 downto 0) := (others => '0');
-signal add_out : unsigned(n**2 - 1 downto 0) := (others => '0');
+signal molt_out : unsigned(3*n - 1 downto 0) := (others => '0');
+signal op_R : unsigned(3*n - 1 downto 0) := (others => '0');
+signal add_out : unsigned(3*n - 1 downto 0) := (others => '0');
 signal clk_en : std_logic := '0';
 
 component cntrl_unit is
@@ -73,10 +73,10 @@ component consumatore is
            a : in  unsigned(n-1 downto 0);
            b : in  unsigned(n-1 downto 0);
            M : in  unsigned(n-1 downto 0);
-			  result_in : in  unsigned(n**2 - 1 downto 0);
+			  result_in : in  unsigned(3*n - 1 downto 0);
            syn_out : out  STD_LOGIC;
            ack_out : out  STD_LOGIC;
-           y : out  unsigned(n**2 - 1 downto 0); -- è sufficiente se M <= n
+           y : out  unsigned(3*n - 1 downto 0);
 			  out_a : out  unsigned(n-1 downto 0);
            out_b : out  unsigned(n-1 downto 0);
 			  rst_out : out STD_LOGIC;
@@ -106,7 +106,7 @@ component moltiplicatore is
            b : in  unsigned(n-1 downto 0);
 			  clk : in std_logic;
 			  rst : in std_logic;
-           y : out  unsigned(n**2 - 1 downto 0));
+           y : out  unsigned(3*n - 1 downto 0));
 end component;
 
 begin
@@ -125,15 +125,15 @@ molt : moltiplicatore generic map(n) port map(
 	a => buff_a, b => buff_b, y => molt_out, clk => clk, rst => rst_state
 );
 
-reg_R : registro generic map(n**2) port map(
+reg_R : registro generic map(3*n) port map(
 	d => molt_out, rst => rst_state, en => clk_en, q => op_R
 );
 
-reg_S : registro generic map(n**2) port map(
+reg_S : registro generic map(3*n) port map(
 	d => add_out, rst => rst_state, en => clk_en, q => current_sum
 );
 
-somma : sommatore generic map(n**2) port map(
+somma : sommatore generic map(3*n) port map(
 	a => current_sum, b => op_R, y => add_out, clk => clk, rst => rst_state
 );
 

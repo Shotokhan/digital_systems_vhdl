@@ -43,11 +43,11 @@ end orologio;
 
 architecture Structural of orologio is
 -- costanti: frequenza del clock 50 MHz
-constant n : positive := 26;
-constant m_psc : std_logic_vector(n-1 downto 0) := "10111110101111000010000000";
+--constant n : positive := 26;
+--constant m_psc : std_logic_vector(n-1 downto 0) := "10111110101111000010000000";
  -- per simulare:
---constant n : positive := 3;
---constant m_psc : std_logic_vector(n-1 downto 0) := "101";
+constant n : positive := 3;
+constant m_psc : std_logic_vector(n-1 downto 0) := "101";
 -- segnali interni
 signal clk_sec : std_logic := '0';
 signal clk_min : std_logic := '0';

@@ -50,7 +50,7 @@ ARCHITECTURE behavior OF prod_scalare_testbench IS
          ack_end_op : IN  std_logic;
          ack : OUT  std_logic;
          end_op : OUT  std_logic;
-         y : OUT  unsigned(63 downto 0)
+         y : OUT  unsigned(23 downto 0)
         );
     END COMPONENT;
     
@@ -67,7 +67,7 @@ ARCHITECTURE behavior OF prod_scalare_testbench IS
  	--Outputs
    signal ack : std_logic;
    signal end_op : std_logic;
-   signal y : unsigned(63 downto 0);
+   signal y : unsigned(23 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -124,7 +124,7 @@ BEGIN
 		b <= to_unsigned(4, 8);
 		wait until (end_op = '1'); -- il protocollo è semisincrono
 		ack_end_op <= '1';
-		assert (y = to_unsigned(56, 64));
+		assert (y = to_unsigned(56, 24));
 		wait until (end_op = '0'); -- il protocollo è semisincrono
 		ack_end_op <= '0';
 		wait for clk_period;
@@ -150,7 +150,7 @@ BEGIN
 		b <= to_unsigned(200, 8);
 		wait until (end_op = '1');
 		ack_end_op <= '1';
-		assert (y = to_unsigned(1400, 64));
+		assert (y = to_unsigned(1400, 24));
 		wait until (end_op = '0');
 		ack_end_op <= '0';
 

@@ -35,13 +35,13 @@ entity moltiplicatore is
            b : in  unsigned(n-1 downto 0);
 			  clk : in std_logic;
 			  rst : in std_logic;
-           y : out  unsigned(n**2 - 1 downto 0));
+           y : out  unsigned(3*n - 1 downto 0));
 end moltiplicatore;
 
 architecture Behavioral of moltiplicatore is
 -- diviso 2 perché la moltiplicazione automaticamente ritorna un risultato
 -- che ha dimensione in bit doppia dell'ingresso
-signal zero : unsigned(n*(n-2)/2 - 1 downto 0) := (others => '0');
+signal zero : unsigned(n/2 - 1 downto 0) := (others => '0');
 
 begin
 molt : process(clk, rst)
