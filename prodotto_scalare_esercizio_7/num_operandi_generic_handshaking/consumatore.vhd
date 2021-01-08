@@ -41,7 +41,7 @@ entity consumatore is
 			  result_in : in  unsigned(3*n - 1 downto 0);
            syn_out : out  STD_LOGIC;
            ack_out : out  STD_LOGIC;
-           y : out  unsigned(3*n - 1 downto 0); -- è sufficiente se M <= n
+           y : out  unsigned(3*n - 1 downto 0);
 			  out_a : out  unsigned(n-1 downto 0);
            out_b : out  unsigned(n-1 downto 0);
 			  rst_out : out STD_LOGIC;

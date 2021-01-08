@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    09:55:27 11/14/2020 
+-- Create Date:    10:33:10 11/18/2020 
 -- Design Name: 
--- Module Name:    registro_4_bit - Behavioral 
+-- Module Name:    FF_D - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,28 +29,29 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity registro_4_bit is
-    Port ( d : in  STD_LOGIC_VECTOR(3 downto 0);
-           en : in  STD_LOGIC;
-           rst : in  STD_LOGIC;
-           q : out  STD_LOGIC_VECTOR(3 downto 0));
-end registro_4_bit;
+entity FF_D is
 
-architecture Structural of registro_4_bit is
+port (
+	clk, en, reset : in std_logic;
+	D : in std_logic_vector ( 7 downto 0 );
+	Q : out std_logic_vector ( 7 downto 0 ));
 
-component ff_D is
-    Port ( en : in  STD_LOGIC;
-           rst : in  STD_LOGIC;
-           d : in  STD_LOGIC;
-           q : out  STD_LOGIC);
-end component;
+end FF_D;
+
+architecture Behavioral of FF_D is
 
 begin
-banco : for i in 0 to 3 generate
-	cella : ff_D port map(
-		en => en, rst => rst, d => d(i), q => q(i)
-	);
-end generate;
 
-end Structural;
+process (clk)
+	begin
+		if (clk'event and clk = '1') then
+			if reset = '1' then
+				Q <= "00000000";
+			elsif en = '1' then
+				Q <= D;
+			end if;
+		end if;
+end process;
+
+end Behavioral;
 

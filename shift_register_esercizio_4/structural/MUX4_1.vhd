@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    10:03:54 11/14/2020 
+-- Create Date:    08:16:54 11/06/2020 
 -- Design Name: 
--- Module Name:    mux_2_1_parallelo_8_bit - Behavioral 
+-- Module Name:    MUX4_1 - Structural 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,17 +29,35 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity mux_2_1_parallelo_8_bit is
-    Port ( a : in  STD_LOGIC_VECTOR(7 downto 0);
-           b : in  STD_LOGIC_VECTOR(7 downto 0);
-           sel : in  STD_LOGIC;
-           y : out  STD_LOGIC_VECTOR(7 downto 0));
-end mux_2_1_parallelo_8_bit;
+entity MUX4_1 is
+    Port ( I : in  STD_LOGIC_VECTOR(0 to 3);
+           S : in  STD_LOGIC_VECTOR(1 downto 0);
+           U : out  STD_LOGIC);
+end MUX4_1;
 
-architecture Behavioral of mux_2_1_parallelo_8_bit is
-
+architecture Structural of MUX4_1 is
+signal Y : STD_LOGIC_VECTOR(0 to 1) := (others => '0');
+	component MUX2_1
+		port( I : in STD_LOGIC_VECTOR(1 downto 0);
+				S : in STD_LOGIC;
+				U : out STD_LOGIC
+				);
+	end component;
+	
 begin
-y <= a when sel = '0' else b;
-
-end Behavioral;
+	mux0to1: FOR j IN 0 TO 1 GENERATE
+		m: MUX2_1
+		Port map(	I => I(j*2 to j*2+1),
+						S => S(0),
+						U => Y(j)
+					);
+	END GENERATE;
+	
+	mux2: MUX2_1
+		Port map(	I => Y(0 to 1),
+						S => S(1),
+						U => U
+					);
+						
+end Structural;
 

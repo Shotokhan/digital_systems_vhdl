@@ -56,14 +56,6 @@ signal op_R : unsigned(3*n - 1 downto 0) := (others => '0');
 signal add_out : unsigned(3*n - 1 downto 0) := (others => '0');
 signal clk_en : std_logic := '0';
 
-component cntrl_unit is
-    Port ( clk : in  STD_LOGIC;
-           rst : in  STD_LOGIC;
-           step : in  STD_LOGIC;
-           en_S : out  STD_LOGIC;
-           en_R : out  STD_LOGIC);
-end component;
-
 component consumatore is
 	 Generic(n : positive := 8);
     Port ( clk : in STD_LOGIC;

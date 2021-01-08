@@ -82,7 +82,7 @@ ARCHITECTURE behavior OF cntrl_unit_testbench IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: entity work.cntrl_unit(Microprogrammata) PORT MAP (
+   uut: entity work.cntrl_unit(Cablata) PORT MAP (
           clk => clk,
           start_a => start_a,
           start_b => start_b,

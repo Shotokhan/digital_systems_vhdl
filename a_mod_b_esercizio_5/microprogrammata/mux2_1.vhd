@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    10:53:44 11/14/2020 
+-- Create Date:    21:26:20 11/11/2020 
 -- Design Name: 
--- Module Name:    decoder_2_4_en - Behavioral 
+-- Module Name:    MUX2_1 - Dataflow 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,34 +29,20 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity decoder_2_4_en is
-    Port ( x : in  STD_LOGIC_VECTOR(1 downto 0);
-           en : in  STD_LOGIC;
-           y : out  STD_LOGIC_VECTOR(3 downto 0));
-end decoder_2_4_en;
+entity mux2_1 is
+    Port ( I0 : in STD_LOGIC_VECTOR(7 downto 0);
+			  I1 : in STD_LOGIC_VECTOR(7 downto 0);
+           S : in  STD_LOGIC;
+           U : out STD_LOGIC_VECTOR(7 downto 0)
+			  );
+end mux2_1;
 
-architecture Behavioral of decoder_2_4_en is
+architecture df of mux2_1 is
 
 begin
-decode : process(x, en)
-begin
-	if (en = '1') then
-		case x is
-			when "00" =>
-				y <= "0001";
-			when "01" =>
-				y <= "0010";
-			when "10" =>
-				y <= "0100";
-			when "11" =>
-				y <= "1000";
-			when others =>
-				y <= "0000";
-		end case;
-	else
-		y <= "0000";
-	end if;
-end process;
-
-end Behavioral;
+	with S select
+		U <= I0 when '0',
+			  I1 when '1',
+			  (others => '-') when others;
+end df;
 

@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    21:50:32 11/09/2020 
+-- Create Date:    08:04:27 11/06/2020 
 -- Design Name: 
--- Module Name:    ff_D - Behavioral 
+-- Module Name:    FF_T - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,24 +29,33 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity ff_D is
-    Port ( d : in  STD_LOGIC;
-           clk : in  STD_LOGIC;
-           rst : in  STD_LOGIC;
-           q : out  STD_LOGIC);
-end ff_D;
+entity FF_D is
+    Port ( CLK : in  STD_LOGIC;
+           RESET : in  STD_LOGIC;
+			  A : in STD_LOGIC;
+			  LOAD : in STD_LOGIC;
+           D : in  STD_LOGIC;
+           Q : out  STD_LOGIC);
+end FF_D;
 
-architecture Behavioral of ff_D is
+architecture Behavioral of FF_D is
+	signal QINTERNAL: std_logic;
+begin
 
-begin
-mem : process(clk, rst)
-begin
-	if (rst = '1') then
-		q <= '0';
-	elsif (clk = '1' and clk'event) then
-		q <= d;
-	end if;
-end process;
+	ff: process(CLK)
+	begin
+		if(CLK'event and CLK = '1') then
+			if(RESET = '1') then
+				QINTERNAL <= '0';
+			elsif(LOAD = '1') then
+				QINTERNAL <= A;
+			else
+				QINTERNAL <= D;
+			end if;
+		end if;
+	end process;
+	
+	Q <= QINTERNAL;
 
 end Behavioral;
 

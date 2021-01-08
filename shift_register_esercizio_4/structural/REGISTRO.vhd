@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    09:48:17 11/14/2020 
+-- Create Date:    14:11:00 11/06/2020 
 -- Design Name: 
--- Module Name:    ff_D - Behavioral 
+-- Module Name:    REGISTRO - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,25 +29,25 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity ff_D is
-    Port ( en : in  STD_LOGIC;
-           rst : in  STD_LOGIC;
-           d : in  STD_LOGIC;
-           q : out  STD_LOGIC);
-end ff_D;
+entity REGISTRO is
+    Port ( CLK : in  STD_LOGIC;
+           RESET : in  STD_LOGIC;
+           y : in  STD_LOGIC;
+           U : out  STD_LOGIC);
+end REGISTRO;
 
-architecture Behavioral of ff_D is
+architecture Behavioral of REGISTRO is
 
 begin
-mem : process(en, rst)
-begin
-	if (rst = '1') then
-		q <= '0';
-	elsif (en = '1' and en'event) then
-		q <= d;
-	end if;
-end process;
-
-
+	process( CLK )
+		begin
+			if( CLK'event and CLK = '1' ) then
+				if( RESET = '1' ) then
+					U <= '0';
+				else
+					U <= y;
+				end if;
+			end if;
+	end process;
 end Behavioral;
 
